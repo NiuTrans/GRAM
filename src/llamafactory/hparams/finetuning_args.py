@@ -13,7 +13,7 @@
 # limitations under the License.
 
 from dataclasses import asdict, dataclass, field
-from typing import Any, Literal, Optional
+from typing import Any, Literal, Optional, List
 
 
 @dataclass
@@ -386,8 +386,28 @@ class SwanLabArguments:
 
 
 @dataclass
+class GRAMArgument:
+    r"""
+    Arguments for GRAM.
+    """
+
+    gram_loss: bool = field(
+        default=False,
+        metadata={"help": "Whether or not to replace GRAM loss with original SFT loss."},
+    )
+    gram_candidate_labels: List[str] = field(
+        default_factory=lambda : [" A", " B"],
+        metadata={"help": "Possible labels for GRAM."},
+    )
+    gram_label_smoothing: float = field(
+        default=0.0,
+        metadata={"help": "Label Smoothing for GRAM."},
+    )
+
+
+@dataclass
 class FinetuningArguments(
-    SwanLabArguments, BAdamArgument, ApolloArguments, GaloreArguments, RLHFArguments, LoraArguments, FreezeArguments
+    SwanLabArguments, BAdamArgument, ApolloArguments, GaloreArguments, RLHFArguments, LoraArguments, FreezeArguments, GRAMArgument
 ):
     r"""Arguments pertaining to which techniques we are going to fine-tuning with."""
 

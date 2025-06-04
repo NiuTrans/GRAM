@@ -53,10 +53,46 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
         gen_kwargs: Optional[dict[str, Any]] = None,
         **kwargs,
     ) -> None:
+        tokenizer = kwargs["tokenizer"]
+
         if is_transformers_version_greater_than("4.46"):
             kwargs["processing_class"] = kwargs.pop("tokenizer")
         else:
             self.processing_class: PreTrainedTokenizer = kwargs.get("tokenizer")
+
+        if finetuning_args.gram_loss:
+            logger.info_rank0(f"Replacing GRAM Loss with original SFT Loss ...")
+            self.gram_candidate_labels = finetuning_args.gram_candidate_labels
+            logger.info_rank0(f"GRAM candidate labels: {self.gram_candidate_labels}")
+            self.gram_label_smoothing = finetuning_args.gram_label_smoothing
+            logger.info_rank0(f"GRAM label smoothing: {self.gram_label_smoothing}")
+            self.gram_candidate_labels_token_id = []
+            for item in self.gram_candidate_labels:
+                label_token_id = tokenizer(item, add_special_tokens=False).input_ids
+                assert len(label_token_id) == 1, f"The number of token id for labels is greater than 1. Token:{item}, Token ID: {label_token_id}"
+                self.gram_candidate_labels_token_id += label_token_id
+
+            def compute_loss_func(outputs, labels, num_items_in_batch,
+                                  gram_candidate_labels_token_id=self.gram_candidate_labels_token_id,
+                                  label_smoothing=self.gram_label_smoothing):
+                # outputs = model(**inputs)
+                first_token_in_labels = tuple(torch.nonzero(labels != -100)[0].tolist())
+                logits_first_token_in_labels = outputs.logits[first_token_in_labels]
+                logits_candidate_tokens = logits_first_token_in_labels[gram_candidate_labels_token_id, ...]
+                assert labels[first_token_in_labels].item() in gram_candidate_labels_token_id, \
+                    f"Label token id: {labels[first_token_in_labels].item()}, Expected token ids: {str(gram_candidate_labels_token_id)}"
+                cross_entropy_loss = torch.nn.CrossEntropyLoss(
+                    label_smoothing=label_smoothing
+                )(
+                    logits_candidate_tokens,
+                    torch.tensor(
+                        gram_candidate_labels_token_id.index(labels[first_token_in_labels]),
+                        device=logits_candidate_tokens.device
+                    )
+                )
+                return cross_entropy_loss
+
+            kwargs["compute_loss_func"] = compute_loss_func
 
         super().__init__(**kwargs)
         if processor is not None:
