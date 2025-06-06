@@ -30,7 +30,8 @@ Please directly output your final verdict by strictly following this format: "A"
 [The Start of Assistant B's Answer]
 {response_b}
 [The End of Assistant B's Answer]
-"""
+
+#Preferred: """
 
 model_name_or_path = args.model
 tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
@@ -59,7 +60,7 @@ for idx in trange(0, len(input_data), args.batch_size):
             [{"role": "user", "content": system_prompt.format(input=item["prompt"], response_a=item["rejected"], response_b=item["chosen"])}],
         ]
 
-    prompt = [tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True) for message in messages]
+    prompt = [tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True, enable_thinking=False) for message in messages]
     inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(model.device)
 
     with torch.no_grad():
