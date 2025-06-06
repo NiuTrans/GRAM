@@ -79,8 +79,10 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
                 first_token_in_labels = tuple(torch.nonzero(labels != -100)[0].tolist())
                 logits_first_token_in_labels = outputs.logits[first_token_in_labels]
                 logits_candidate_tokens = logits_first_token_in_labels[gram_candidate_labels_token_id, ...]
+                
                 assert labels[first_token_in_labels].item() in gram_candidate_labels_token_id, \
                     f"Label token id: {labels[first_token_in_labels].item()}, Expected token ids: {str(gram_candidate_labels_token_id)}"
+                
                 cross_entropy_loss = torch.nn.CrossEntropyLoss(
                     label_smoothing=label_smoothing
                 )(

@@ -9,7 +9,10 @@
     "file_name": "alpaca_zh_demo.json"
   },
   "unified_feedback_600k": {
-    "file_name": "/mnt/wangchenglong/wangchenglong/datasets/unified_feedback_stage_1_600k_clean.json"
+    "file_name": "/home/user/if/wang/datasets/unified_feedback_stage_1_600k_clean.json"
+  },
+  "skywork_ft_rm": {
+    "file_name": "/home/user/if/wang/datasets/skywork_reward_preference_80k_v0.2.json"
   },
   "glaive_toolcall_en_demo": {
     "file_name": "glaive_toolcall_en_demo.json",
