@@ -65,8 +65,8 @@ for idx in trange(0, len(input_data), args.batch_size):
     with torch.no_grad():
         output = model(**inputs)
         logits = torch.gather(output.logits[..., -1, :], 1, target_choices_token_ids.repeat(args.batch_size, 1))
-        p = torch.nn.Softmax(dim=0)(logits)
-        scores = torch.mean(p, dim=1).view(args.batch_size, 2).tolist()
+        p = torch.nn.Softmax(dim=1)(logits).view(args.batch_size, -1, 2)
+        scores = torch.mean(p, dim=1).tolist()
 
     for data_item, res_item in zip(batch_data, scores):
         data_item["score_chosen"] = res_item[0]
