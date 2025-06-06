@@ -35,21 +35,26 @@ messages = [
     [{"role": "user", "content": prompt.format(input=query, response_a=response2, response_b=response1)}],
 ]
 
-# target at response1
-target_choices = ["A", "B"]
-target_choices_token_ids = torch.tensor([tokenizer(item, add_special_tokens=False).input_ids for item in target_choices], device=model.device)
+# target at response1, response2 respectively
+target_choices_response1 = ["A", "B"]
+target_choices_response1_token_ids = torch.tensor([tokenizer(item, add_special_tokens=False).input_ids for item in target_choices_response1], device=model.device)
+target_choices_response2_token_ids = torch.flip(target_choices_response1_token_ids, dims=(0,))
+target_choices_token_ids = torch.cat((target_choices_response1_token_ids, target_choices_response2_token_ids), dim=1)
 
 prompt = [tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True) for message in messages]
 inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(model.device)
 
 with torch.no_grad():
     output = model(**inputs)
-    p = torch.nn.Softmax(dim=-1)(output.logits)
-    score = torch.mean(torch.gather(p[..., -1, :], 1, target_choices_token_ids)).item()
+    logits = torch.gather(output.logits[..., -1, :], 1, target_choices_token_ids)
+    p = torch.nn.Softmax(dim=0)(logits)
+    score_response1, score_response2 = torch.mean(p, dim=1).tolist()
 
 print({
     "query": query,
     "response1": response1,
     "response2": response2,
-    "score_1_better_than_2": score,
+    "score_response1": score_response1,
+    "score_response2": score_response2,
+    "response1_is_better": score_response1 > score_response2,
 })
