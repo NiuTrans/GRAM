@@ -76,21 +76,26 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
                                   gram_candidate_labels_token_id=self.gram_candidate_labels_token_id,
                                   label_smoothing=self.gram_label_smoothing):
                 # outputs = model(**inputs)
-                first_token_in_labels = tuple(torch.nonzero(labels != -100)[0].tolist())
-                logits_first_token_in_labels = outputs.logits[first_token_in_labels]
-                logits_candidate_tokens = logits_first_token_in_labels[gram_candidate_labels_token_id, ...]
-                
-                assert labels[first_token_in_labels].item() in gram_candidate_labels_token_id, \
-                    f"Label token id: {labels[first_token_in_labels].item()}, Expected token ids: {str(gram_candidate_labels_token_id)}"
-                
+                first_token_in_labels = []
+                for idx, label in enumerate(labels):
+                    first_token_in_labels.append([tuple(torch.nonzero(label != -100)[0].tolist())[0]])
+
+                first_token_in_labels = torch.tensor(first_token_in_labels, device=labels.device)
+
+                logits_first_token_in_labels = torch.cat([item[idx] for idx, item in zip(first_token_in_labels, outputs.logits)], dim=0)
+                logits_candidate_tokens = logits_first_token_in_labels[:, gram_candidate_labels_token_id]
+
+                gram_labels = []
+                for item in torch.gather(labels, 1, first_token_in_labels):
+                    assert item in gram_candidate_labels_token_id, \
+                        f"Label token id: {item}, Expected token ids: {str(gram_candidate_labels_token_id)}"
+                    gram_labels.append(gram_candidate_labels_token_id.index(item))
+
                 cross_entropy_loss = torch.nn.CrossEntropyLoss(
                     label_smoothing=label_smoothing
                 )(
                     logits_candidate_tokens,
-                    torch.tensor(
-                        gram_candidate_labels_token_id.index(labels[first_token_in_labels]),
-                        device=logits_candidate_tokens.device
-                    )
+                    torch.tensor(gram_labels, device=logits_candidate_tokens.device)
                 )
                 return cross_entropy_loss
 
