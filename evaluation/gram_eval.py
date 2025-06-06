@@ -3,6 +3,7 @@ import json
 import torch
 import argparse
 import accelerate
+from tqdm import trange
 from transformers import AutoTokenizer, AutoModelForCausalLM
 
 
@@ -15,7 +16,7 @@ parser.add_argument("-o", "--output")
 parser.add_argument("-b", "--batch-size", default=1)
 args = parser.parse_args()
 
-prompt = """Please act as an impartial judge and evaluate the quality of the responses provided by two AI assistants to the user question displayed below. You should choose the assistant that follows the user\'s instructions and answers the user\'s question better.
+system_prompt = """Please act as an impartial judge and evaluate the quality of the responses provided by two AI assistants to the user question displayed below. You should choose the assistant that follows the user\'s instructions and answers the user\'s question better.
 Your evaluation should consider factors such as the helpfulness, relevance, accuracy, depth, creativity, and level of detail of their responses. Avoid any position biases and ensure that the order in which the responses were presented does not influence your decision. Do not allow the length of the responses to influence your evaluation. Do not favor certain names of the assistants. Be as objective as possible.
 Please directly output your final verdict by strictly following this format: "A" if assistant A is better, "B" if assistant B is better.
 
@@ -48,14 +49,14 @@ target_choices_token_ids = torch.cat((target_choices_response1_token_ids, target
 with open(args.input, 'r', encoding='utf-8') as f:
     input_data = json.load(f)
 
-for idx in range(0, len(input_data), args.batch_size):
+for idx in trange(0, len(input_data), args.batch_size):
     res = []
     batch_data = input_data[idx:idx+args.batch_size]
     messages = []
     for item in batch_data:
         messages += [
-            [{"role": "user", "content": prompt.format(input=item["prompt"], response_a=item["chosen"], response_b=item["rejected"])}],
-            [{"role": "user", "content": prompt.format(input=item["prompt"], response_a=item["rejected"], response_b=item["chosen"])}],
+            [{"role": "user", "content": system_prompt.format(input=item["prompt"], response_a=item["chosen"], response_b=item["rejected"])}],
+            [{"role": "user", "content": system_prompt.format(input=item["prompt"], response_a=item["rejected"], response_b=item["chosen"])}],
         ]
 
     prompt = [tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True) for message in messages]
@@ -65,7 +66,7 @@ for idx in range(0, len(input_data), args.batch_size):
         output = model(**inputs)
         logits = torch.gather(output.logits[..., -1, :], 1, target_choices_token_ids.repeat(args.batch_size, 1))
         p = torch.nn.Softmax(dim=0)(logits)
-        scores = torch.mean(p, dim=1).view(2, args.batch_size).tolist()
+        scores = torch.mean(p, dim=1).view(args.batch_size, 2).tolist()
 
     for data_item, res_item in zip(batch_data, scores):
         data_item["score_chosen"] = res_item[0]
