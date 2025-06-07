@@ -16,6 +16,9 @@ parser.add_argument("-o", "--output")
 parser.add_argument("-b", "--batch-size", default=1)
 args = parser.parse_args()
 
+if os.path.exists(args.output):
+    os.remove(args.output)
+
 system_prompt = """Please act as an impartial judge and evaluate the quality of the responses provided by two AI assistants to the user question displayed below. You should choose the assistant that follows the user\'s instructions and answers the user\'s question better.
 Your evaluation should consider factors such as the helpfulness, relevance, accuracy, depth, creativity, and level of detail of their responses. Avoid any position biases and ensure that the order in which the responses were presented does not influence your decision. Do not allow the length of the responses to influence your evaluation. Do not favor certain names of the assistants. Be as objective as possible.
 Please directly output your final verdict by strictly following this format: "A" if assistant A is better, "B" if assistant B is better.
@@ -61,6 +64,10 @@ for idx in trange(0, len(input_data), args.batch_size):
         ]
 
     prompt = [tokenizer.apply_chat_template(message, tokenize=False, add_generation_prompt=True, enable_thinking=False) for message in messages]
+
+    # enable_thinking=False
+    # tokenizer.decode(output.logits.max(-1)[-1][0])
+
     inputs = tokenizer(prompt, return_tensors="pt", padding=True).to(model.device)
 
     with torch.no_grad():
@@ -68,6 +75,8 @@ for idx in trange(0, len(input_data), args.batch_size):
         logits = torch.gather(output.logits[..., -1, :], 1, target_choices_token_ids.repeat(args.batch_size, 1))
         p = torch.nn.Softmax(dim=1)(logits).view(args.batch_size, -1, 2)
         scores = torch.mean(p, dim=1).tolist()
+
+    # import pdb; pdb.set_trace()
 
     for data_item, res_item in zip(batch_data, scores):
         data_item["score_chosen"] = res_item[0]

@@ -1,5 +1,6 @@
 ### model
-model_name_or_path: /home/user/if/wang/models/saves/qwen3-4b/pre-training-rm-unified-feedback-600k
+# model_name_or_path: /home/user/if/wang/models/saves/qwen3-4b/pre-training-rm-unified-feedback-600k
+model_name_or_path: /home/user/if/wang/models/saves/qwen3-14b/pre-training-rm-unified-feedback-600k/checkpoint-1000
 
 trust_remote_code: true
 
@@ -22,17 +23,17 @@ dataloader_num_workers: 4
 enable_thinking: false
 
 ### output
-output_dir: /home/user/if/wang/models/saves/qwen3-4b/sft-rm-skywork-v0.2
+output_dir: /home/user/if/wang/models/saves/qwen3-14b/sft-rm-skywork-v0.2-ckp-1000-new
 logging_steps: 10
-save_steps: 500
+save_steps: 100
 plot_loss: true
 overwrite_output_dir: true
-save_only_model: false
+save_only_model: true
 report_to: none  # choices: [none, wandb, tensorboard, swanlab, mlflow]
 
 ### train
-per_device_train_batch_size: 16
-gradient_accumulation_steps: 1
+per_device_train_batch_size: 4
+gradient_accumulation_steps: 4
 learning_rate: 2.0e-5
 num_train_epochs: 3.0
 lr_scheduler_type: cosine
@@ -48,9 +49,9 @@ resume_from_checkpoint: null
 # eval_strategy: steps
 # eval_steps: 500
 
-### GRAM
+## GRAM
 gram_loss: true
 gram_candidate_labels:
  - "A"
  - "B"
-gram_label_smoothing: 0.1
+gram_label_smoothing: 0.05

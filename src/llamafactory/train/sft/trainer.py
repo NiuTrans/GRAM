@@ -82,7 +82,7 @@ class CustomSeq2SeqTrainer(Seq2SeqTrainer):
 
                 first_token_in_labels = torch.tensor(first_token_in_labels, device=labels.device)
 
-                logits_first_token_in_labels = torch.cat([item[idx] for idx, item in zip(first_token_in_labels, outputs.logits)], dim=0)
+                logits_first_token_in_labels = torch.cat([item[(idx[0]-1).unsqueeze(0)] for idx, item in zip(first_token_in_labels, outputs.logits)], dim=0)
                 logits_candidate_tokens = logits_first_token_in_labels[:, gram_candidate_labels_token_id]
 
                 gram_labels = []
