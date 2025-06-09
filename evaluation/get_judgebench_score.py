@@ -1,7 +1,8 @@
 import json
+import sys
 from typing import Dict, List
 
-result_file_path = "/home/user/if/wang/models/saves/qwen3-14b/sft-rm-skywork-v0.2/checkpoint-1500/judge-bench.res"
+result_file_path = sys.argv[1]
 
 subset_results: Dict[str, List[bool]] = {}
 
