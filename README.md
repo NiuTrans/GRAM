@@ -18,7 +18,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 
 ## 🔗 Quick Links
-- [GRAM: A Generative Foundation Reward Model for Reward Generalization](#a-generative-foundation-reward-model-GRAM)
+- [GRAM: A Generative Foundation Reward Model for Reward Generalization](#a-generative-foundation-reward-model-gram)
   <!-- - [Changelog](#-changelog)
   - [Tips for Running SimPO](#tips-for-running-simpo)
   - [Released Models](#released-models)
