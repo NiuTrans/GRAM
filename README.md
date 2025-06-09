@@ -39,7 +39,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 ## Installation Guide
 
-The code of this repo is modified from [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory).
+The code of this repo is modified from [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) 🌹🌹🌹. If you encounter installation issues (e.g., related to PyTorch or CUDA), we recommend first checking the LLaMA-Factory [issues](https://github.com/hiyouga/LLaMA-Factory/issues) for potential solutions. If the problem persists, please feel free to submit an issue in this repository.
 
 ```bash
 git clone --depth 1 https://gitee.com/wangclnlp/gram
