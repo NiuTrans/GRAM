@@ -155,7 +155,7 @@ llamafactory-cli train examples/train_full/qwen3_pre_training_rm.yaml
 ### Fine-Tuning
 
 ```bash
-llamafactory-cli train examples/train_full/qwen3_pre_training_ft.yaml
+llamafactory-cli train examples/train_full/qwen3_fine_tuning_rm.yaml
 ```
 
 ### Evaluation
