@@ -18,12 +18,33 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 
 ## 🔗 Quick Links
-- [GRAM: A Generative Foundation Reward Model for Reward Generalization](#a-generative-foundation-reward-model-gram)
-  <!-- - [Changelog](#-changelog)
-  - [Tips for Running SimPO](#tips-for-running-simpo)
-  - [Released Models](#released-models)
-  - [Install Requirements](#install-requirements)
-  - [Training scripts](#training-scripts)
-  - [Evaluation](#evaluation)
-  - [Bugs or Questions?](#bugs-or-questions)
-  - [Citation](#citation) -->
+* [GRAM: A Generative Foundation Reward Model for Reward Generalization](#a-generative-foundation-reward-model-gram)
+
+  * [Changelog](#changelog)
+  * [Released Models](#released-models)
+  * [Installation Guide](#installation)
+  * [Preparing Models and Datasets](#preparing-models-and-datasets)
+  * [Training Scripts](#training-scripts)
+  * [Using GRAM in RLHF](#how-to-use-gram-in-rlhf)
+  * [Citation](#citation)
+
+
+---
+
+## Released Models
+
+## Installation Guide
+
+## Preparing Models and Datasets
+
+## Training Scripts
+
+<!-- pre-training -->  
+
+<!-- fine-tuning -->  
+
+<!-- Evaluation -->
+
+## Using GRAM in RLHF?
+
+## Citation
