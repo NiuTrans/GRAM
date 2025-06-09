@@ -45,6 +45,6 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 <!-- Evaluation -->
 
-## Using GRAM in RLHF?
+## Using GRAM in RLHF
 
 ## Citation
