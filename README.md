@@ -1,10 +1,3 @@
-<!-- <div align="center">
-  <h1>A Generative Foundation Reward Model for Reward Generalization</h1>
-  <p align="center" dir="auto">
-  <a href="https://"> 【Paper】 📝 </a> |
-  <a href="https://"> 【Models】 🤗 </a>
-  </p>
-</div> -->
 
 # A Generative Foundation Reward Model (GRAM)
 
@@ -14,7 +7,9 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 
 ## 🆕 Changelog
-
+- [2025/6/15] 
+- [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available [at this link 🤗].
+- [2025/5/2] Our paper has been accepted by ICML 2025!
 
 
 ## 🔗 Quick Links
@@ -33,9 +28,14 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 ## Released Models
 
+Check out our GRAM series below. The models were first pre-trained on the dataset available [here](), and then fine-tuned on the dataset available [here]().
+
+
+
 | Model | Model Size |
 |-------|------------|
 | | |
+
 
 ## Installation Guide
 
