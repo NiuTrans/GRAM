@@ -7,7 +7,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 
 ## 🆕 Changelog
-- [2025/6/15] 
+- [2025/6/15]
 - [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available [at this link 🤗].
 - [2025/5/2] Our paper has been accepted by ICML 2025!
 
@@ -190,25 +190,13 @@ ckpt_path=/path/to/your/model
 
 ## Using GRAM in RLHF
 
-### Computing Rewards of Samples
+### Computing Rewards of a pair of Samples
 
 ```python
-def calculating_pair_rewards(pair):
-    # calculating rewards for response_a and response_b as in the demo
-    # `evaluation/gram_demo.py`
+def compute_pair_rewards(response_a, response_b):
+    # compute rewards for response_a and response_b as in the demo `evaluation/gram_demo.py`
     ...
     return reward_response_a, reward_response_b
-
-def calculating_reward(samples):
-    rewards = []
-    assert len(samples) >= 2
-    rewards += calculating_pair_rewars([samples[0], samples[1]])
-    # take sample[0] as baseline
-    for sample in samples[2:]:
-        reward_baseline, reward_sample = calculating_pair_rewards([samples[0], sample])
-        rewards.append(reward_sample -  reward_baseline + rewards[0])
-
-    return rewards
 ```
 
 ### PPO
@@ -216,37 +204,15 @@ def calculating_reward(samples):
 When applying GRAM to PPO training, we first generate a **reference response** and then compute a reward score using GRAM, which quantifies **how much better the sampled response is compared to the reference**. This score serves as the reward signal during PPO training. The basic idea, using the difference between the sampled and reference responses as the reward, has been shown effective in prior baseline methods. Additionally, inspired by [*ReMax*](https://arxiv.org/abs/2310.10505), we can use **greedy search** to construct the reference response. The detailed procedure is described below:
 
 ```python
-# https://github.com/huggingface/trl/blob/e0dd5250217305f7f8c2f4a153a6939a2f16e2bf/trl/trainer/ppo_trainer.py#L346
-def train(self):
-    # Init models
-    ref_model = ...
-    policy_model = ...
-    reward_model = ...
-    value_model = ...
-
-    for update in range(1, num_total_batches + 1):
-        with torch.no_grad():
-         # Generate and compute logits from actor model
-         ...
-         query_responses, logitss = batch_generation(policy_model, ...)
-         ...
-         # Compute logits from reference model with responses
-         ...
-         ref_output = forward(ref_model, query_responses, ...)
-         ...
-         # Compute Value
-         ...
-         value, _, _ = get_reward(value_model, query_responses, ...)
-         ...
-         # Compute Reward
-         ...
-         calculating_reward(query_responses)
-         ...
-
-         # Other Steps
-         ...
-
-    # PPO Updating
+def ppo():
+    # Init dataset and model
+    ...
+    ref_model, policy_model, reward_model, value_model = ...
+    # Sample from policy model: generate with greedy search first, then sample as normal with top-p/top-k
+    response_greedy_search = greedy_search(policy_model, query)
+    response_normal = generate(policy_model, query, top_p=..., top_k=...)
+    _, reward_response_normal = compute_pair_rewards(response_greedy_search, response_normal)
+    # Compute logits from ref_model, values from value_model and update with PPO loss
     ...
 ```
 
@@ -254,17 +220,19 @@ def train(self):
 A common use case for list-wise response ranking is best-of-n sampling, where the goal is to select the single best response from a list. This can be accomplished using GRAM with a linear search approach, as illustrated below.
 
 ```python
-# Init dataset
-...
-# Init model
-...
-model = AutoModelForCausalLM.from_pretrained(...)
-# Generating from Model for serveral times, take for loop as an example
-for i in range(generating_times):
-    generations = model.generate(...)
+def list_wise_response_ranking():
+    # Init dataset and model
+    ...
+    # Generate from model
+    responses = [response0, response1, responses2, ...]
+    # Compute rewards and choose one with highest score
+    best = response0
+    for response in responses[1:]:
+        score_a, score_b = compute_pair_rewards(best, response)
+        if score_a < score_b:
+           best = response
 
-rewards = calculating_reward(generations)
-generation_with_max_reward = generations[rewards.index(max(rewards))]
+    return best
 ```
 
 ## Citation
