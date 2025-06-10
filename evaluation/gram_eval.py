@@ -14,6 +14,7 @@ parser.add_argument("-i", "--input")
 parser.add_argument("-m", "--model")
 parser.add_argument("-o", "--output")
 parser.add_argument("-b", "--batch-size", default=1)
+parser.add_argument("-bm", "--base-model")
 args = parser.parse_args()
 
 if os.path.exists(args.output):
@@ -37,7 +38,11 @@ Please directly output your final verdict by strictly following this format: "A"
 #Preferred: """
 
 model_name_or_path = args.model
-tokenizer = AutoTokenizer.from_pretrained(model_name_or_path)
+
+tokenizer_path = args.base_model
+
+tokenizer = AutoTokenizer.from_pretrained(tokenizer_path)
+
 tokenizer.padding_side = "left"
 if not tokenizer.pad_token:
     tokenizer.pad_token = tokenizer.eos_token
