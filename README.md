@@ -190,5 +190,78 @@ ckpt_path=/path/to/your/model
 
 ## Using GRAM in RLHF
 
+### Computing Rewards of Samples
+
+```python
+def calculating_pair_rewards(pair):
+    # calculating rewards for response_a and response_b as in the demo
+    # `evaluation/gram_demo.py`
+    ...
+    return reward_response_a, reward_response_b
+
+def calculating_reward(samples):
+    rewards = []
+    assert len(samples) >= 2
+    rewards += calculating_pair_rewars([samples[0], samples[1]])
+    # take sample[0] as baseline
+    for sample in samples[2:]:
+        reward_baseline, reward_sample = calculating_pair_rewards([samples[0], sample])
+        rewards.append(reward_sample -  reward_baseline + rewards[0])
+
+    return rewards
+```
+
+### PPO
+
+```python
+# https://github.com/huggingface/trl/blob/e0dd5250217305f7f8c2f4a153a6939a2f16e2bf/trl/trainer/ppo_trainer.py#L346
+def train(self):
+    # Init models
+    ref_model = ...
+    policy_model = ...
+    reward_model = ...
+    value_model = ...
+
+    for update in range(1, num_total_batches + 1):
+        with torch.no_grad():
+         # Generate and compute logits from actor model
+         ...
+         query_responses, logitss = batch_generation(policy_model, ...)
+         ...
+         # Compute logits from reference model with responses
+         ...
+         ref_output = forward(ref_model, query_responses, ...)
+         ...
+         # Compute Value
+         ...
+         value, _, _ = get_reward(value_model, query_responses, ...)
+         ...
+         # Compute Reward
+         ...
+         calculating_reward(query_responses)
+         ...
+
+         # Other Steps
+         ...
+
+    # PPO Updating
+    ...
+```
+
+### Best-of-N
+
+```python
+# Init dataset
+...
+# Init model
+...
+model = AutoModelForCausalLM.from_pretrained(...)
+# Generating from Model for serveral times, take for loop as an example
+for i in range(generating_times):
+    generations = model.generate(...)
+
+rewards = calculating_reward(generations)
+generation_with_max_reward = generations[rewards.index(max(rewards))]
+```
 
 ## Citation
