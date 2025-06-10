@@ -185,7 +185,7 @@ ckpt_path=/path/to/your/model
   ```bash
   python gram_eval.py -i thu_keg_rm_bench/total_dataset.json -m $ckpt_path -o $ckpt_path/reward-bench.res
   echo -e "RM-bench Evaluation Summary:\n"
-  python get_reward_bench_score.py $ckpt_path/reward-bench.res
+  python thu_keg_rm_bench/compute_accuracy.py $ckpt_path/reward-bench.res
   ```
 
 ## Using GRAM in RLHF
@@ -248,7 +248,8 @@ def train(self):
     ...
 ```
 
-### Best-of-N
+### List-wise Response Ranking
+A common use case for list-wise response ranking is best-of-n sampling, where the goal is to select the single best response from a list. This can be accomplished using GRAM with a linear search approach, as illustrated below.
 
 ```python
 # Init dataset
