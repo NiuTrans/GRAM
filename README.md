@@ -213,6 +213,8 @@ def calculating_reward(samples):
 
 ### PPO
 
+When applying GRAM to PPO training, we first generate a **reference response** and then compute a reward score using GRAM, which quantifies **how much better the sampled response is compared to the reference**. This score serves as the reward signal during PPO training. The basic idea, using the difference between the sampled and reference responses as the reward, has been shown effective in prior baseline methods. Additionally, inspired by [*ReMax*](https://arxiv.org/abs/2310.10505), we can use **greedy search** to construct the reference response. The detailed procedure is described below:
+
 ```python
 # https://github.com/huggingface/trl/blob/e0dd5250217305f7f8c2f4a153a6939a2f16e2bf/trl/trainer/ppo_trainer.py#L346
 def train(self):
