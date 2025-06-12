@@ -1,10 +1,9 @@
 
 # A Generative Foundation Reward Model (GRAM)
 
-This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](). To train a task-specific (domain-specific) reward model, we recommend fine-tuning our released GRAM model on your own preference data. This approach can significantly reduce the reliance on large-scale supervised annotations while achieving strong performance on your target task.
+This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](). To develop a reward model tailored to a specific task or domain, we recommend fine-tuning the released GRAM model using task-specific preference data. This strategy mitigates the dependence on large-scale human annotations while maintaining strong performance on the target task.
 
 <img src="./gram.png" width="1000px"></img>
-
 
 ## 🆕 Changelog
 - [2025/6/15]
@@ -169,7 +168,8 @@ llamafactory-cli train examples/train_full/qwen3_pre_training_rm.yaml
 llamafactory-cli train examples/train_full/qwen3_fine_tuning_rm.yaml
 ```
 
-Note that at this stage, you could directly fine-tune our released models on your own labeled, task-specific (domain-specific) preference data to obtain a reward model tailored to your target task.
+At this stage, the released models can be directly fine-tuned on your own labeled, task- or domain-specific preference data to obtain a reward model that is well-adapted to the target application.
+
 
 
 ### Evaluation
