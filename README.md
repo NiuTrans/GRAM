@@ -265,4 +265,6 @@ We thank the contributions of the following papers:
 [1] Lambert, Nathan, et al. "Rewardbench: Evaluating reward models for language modeling." arXiv preprint arXiv:2403.13787 (2024).
 [2] Liu, Yantao, et al. "RM-bench: Benchmarking reward models of language models with subtlety and style." arXiv preprint arXiv:2410.16184 (2024).
 [3] Tan, Sijun, et al. "Judgebench: A benchmark for evaluating llm-based judges." arXiv preprint arXiv:2410.12784 (2024).
+[4] Grattafiori, Aaron, et al. "The llama 3 herd of models." arXiv preprint arXiv:2407.21783 (2024).
+[5] Yang, An, et al. "Qwen3 technical report." arXiv preprint arXiv:2505.09388 (2025).
 ```
