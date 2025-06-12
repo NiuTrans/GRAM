@@ -1,7 +1,7 @@
 
 # A Generative Foundation Reward Model (GRAM)
 
-This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗]().
+This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](). To train a task-specific (domain-specific) reward model, we recommend fine-tuning our released GRAM model on your own preference data. This approach can significantly reduce the reliance on large-scale supervised annotations while achieving strong performance on your target task.
 
 <img src="./gram.png" width="1000px"></img>
 
@@ -23,7 +23,6 @@ This repository contains the code and released models for our paper [GRAM: A Gen
   * [Using GRAM in RLHF](#how-to-use-gram-in-rlhf)
   * [Citation](#citation)
   * [Acknowledgement](#acknowledgement)
-
 
 ---
 
@@ -53,7 +52,6 @@ Check out our GRAM series below. The models were first pre-trained on the datase
 |Skywork/Skywork-Reward-Gemma-2-27B-v0.2|59.7|66.3|83.9|50.0|65.0|
 |Skywork/Skywork-Reward-Llama-3.1-8B-v0.2|59.1|64.3|76.8|50.0|62.6|
 |internlm/internlm2-20b-reward|62.3|69.4|66.1|50.0|62.0|
-
 
 ## Installation Guide
 
@@ -170,7 +168,8 @@ llamafactory-cli train examples/train_full/qwen3_pre_training_rm.yaml
 ```bash
 llamafactory-cli train examples/train_full/qwen3_fine_tuning_rm.yaml
 ```
-**We recommend directly fine-tuning our open-source reward model using your own task-specific (or domain-specific) preference data.** This approach may reduce reliance on large-scale task-specific data, which allows you to obtain a strong reward model for your target task with only a small amount of preference annotations.
+
+Note that at this stage, you could directly fine-tune our released models on your own labeled, task-specific (domain-specific) preference data to obtain a reward model tailored to your target task.
 
 
 ### Evaluation
