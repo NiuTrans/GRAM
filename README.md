@@ -9,7 +9,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 ## 🆕 Changelog
 - [2025/6/15]
 - [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available at this [link](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k).
-- [2025/5/2] Our paper has been accepted by ICML 2025!
+- [2025/5/1] Our paper has been accepted by ICML 2025!
 
 
 ## 🔗 Quick Links
@@ -22,19 +22,37 @@ This repository contains the code and released models for our paper [GRAM: A Gen
   * [Training Scripts](#training-scripts)
   * [Using GRAM in RLHF](#how-to-use-gram-in-rlhf)
   * [Citation](#citation)
+  * [Acknowledgement](#acknowledgement)
 
 
 ---
 
 ## Released Models
 
-Check out our GRAM series below. The models were first pre-trained on the dataset available [here](), and then fine-tuned on the dataset available [here]().
+Check out our GRAM series below. The models were first pre-trained on the dataset available [here](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k), and then fine-tuned on the dataset available [here](https://huggingface.co/datasets/wangclnlp/GRAM-fine-tuning-65k).
 
+- We evaluate our reward model on the recently introduced [RM-Bench](https://github.com/THU-KEG/RM-Bench), a challenging benchmark for reward models, and present the results as follows:
 
+| Model | Chat |	Code |	Math |	Safety |	Avg. | 
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|Llama-3.1-Nemotron-70B-Reward|70.7|57.4|64.3|90.3|70.7|
+|Skywork-Reward-Gemma-2-27B   |71.8|56.6|59.2|94.3|70.5|
+|Skywork-Reward-Llama-3.1-8B  |69.5|54.5|60.6|95.7|70.1|
+|Nemotron-340B-Reward         |71.2|59.4|59.8|87.5|69.5|
+|internlm2-20b-reward         |63.1|56.7|66.8|86.5|68.3|
+|[GRAM-Qwen3-1.7B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-1.7B-RewardModel)   |59.6|53.6|59.6|91.8|66.2|
+|[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |56.8|50.0|56.3|88.7|63.0|
 
-| Model | Model Size |
-|-------|------------|
-| | |
+- We also evaluate our reward model on the [JudgeBench](https://huggingface.co/datasets/ScalerLab/JudgeBench), a benchmark for evaluating LLM-as-a-Judge applications, and present the results as follows:
+
+| Model | Chat |	Code |	Math |	Safety |	Avg. | 
+|:-:|:-:|:-:|:-:|:-:|:-:|
+|[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |59.7|64.3|84.0|71.4|69.9|
+|Llama-3.1-Nemotron-70B-Reward|62.3|72.5|76.8|57.1|67.2|
+|[GRAM-Qwen3-1.7B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-1.7B-RewardModel)   |60.4|65.3|78.6|57.1|65.4|
+|Skywork-Reward-Gemma-2-27B   |59.7|66.3|83.9|50.0|65.0|
+|Skywork-Reward-Llama-3.1-8B  |59.1|64.3|76.8|50.0|62.6|
+|internlm2-20b-reward         |62.3|69.4|66.1|50.0|62.0|
 
 
 ## Installation Guide
