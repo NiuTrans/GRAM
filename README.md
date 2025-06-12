@@ -8,7 +8,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 ## 🆕 Changelog
 - [2025/6/15]
-- [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available [at this link 🤗].
+- [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available at this [link](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k).
 - [2025/5/2] Our paper has been accepted by ICML 2025!
 
 
@@ -39,7 +39,7 @@ Check out our GRAM series below. The models were first pre-trained on the datase
 
 ## Installation Guide
 
-The code of this repo is modified from [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) 🌹🌹🌹. If you encounter installation issues (e.g., related to PyTorch or CUDA), we recommend first checking the LLaMA-Factory [issues](https://github.com/hiyouga/LLaMA-Factory/issues) for potential solutions. If the problem persists, please feel free to submit an issue in this repository.
+The code of this repo is modified from [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory). If you encounter installation issues (e.g., related to PyTorch or CUDA), we recommend first checking the LLaMA-Factory [issues](https://github.com/hiyouga/LLaMA-Factory/issues) for potential solutions. If the problem persists, please feel free to submit an issue in this repository.
 
 ```bash
 git clone --depth 1 https://gitee.com/wangclnlp/gram
@@ -48,10 +48,6 @@ pip install -e ".[torch,metrics]" --no-build-isolation
 ```
 
 ## Preparing Models and Datasets
-
-### Models
-
-ANY Generative Large Language Model is supported.
 
 ### Datasets
 
@@ -153,10 +149,11 @@ llamafactory-cli train examples/train_full/qwen3_pre_training_rm.yaml
 ```
 
 ### Fine-Tuning
-
 ```bash
 llamafactory-cli train examples/train_full/qwen3_fine_tuning_rm.yaml
 ```
+In most reward model training scenarios, we recommend directly fine-tuning our open-source reward model using your own task-specific (or domain-specific) preference data. This approach may reduce reliance on large-scale task-specific data, which allows you to obtain a strong reward model for your target task with only a small amount of preference annotations.
+
 
 ### Evaluation
 
@@ -217,7 +214,7 @@ def ppo():
 ```
 
 ### List-wise Response Ranking
-A common use case for list-wise response ranking is best-of-n sampling, where the goal is to select the single best response from a list. This can be accomplished using GRAM with a linear search approach, as illustrated below.
+A common use case for list-wise response ranking is best-of-n sampling, where the goal is to select the single best response from a list. This can be accomplished using GRAM with a linear search approach, as illustrated below. To support parallel computation and improve efficiency, we also incorporate optimization strategies such as divide-and-conquer.
 
 ```python
 def list_wise_response_ranking():
@@ -226,13 +223,29 @@ def list_wise_response_ranking():
     # Generate from model
     responses = [response0, response1, responses2, ...]
     # Compute rewards and choose one with highest score
-    best = response0
+    best_response = response0
     for response in responses[1:]:
-        score_a, score_b = compute_pair_rewards(best, response)
+        score_a, score_b = compute_pair_rewards(best_response, response)
         if score_a < score_b:
-           best = response
+           best_response = response
 
-    return best
+    return best_response
 ```
 
 ## Citation
+```bash
+our paper bib
+```
+
+
+## Acknowledgement
+We commence by utilizing the exceptional codebase provided by [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory) 🌹🌹🌹.
+
+We would like to thank [Hang Zhou](https://github.com/stceum) for his help in open-sourcing the GRAM model series.
+
+We thank the contributions of the following papers:
+```bash
+[1] Lambert, Nathan, et al. "Rewardbench: Evaluating reward models for language modeling." arXiv preprint arXiv:2403.13787 (2024).
+[2] Liu, Yantao, et al. "RM-bench: Benchmarking reward models of language models with subtlety and style." arXiv preprint arXiv:2410.16184 (2024).
+[3] Tan, Sijun, et al. "Judgebench: A benchmark for evaluating llm-based judges." arXiv preprint arXiv:2410.12784 (2024).
+```
