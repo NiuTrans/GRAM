@@ -152,7 +152,7 @@ llamafactory-cli train examples/train_full/qwen3_pre_training_rm.yaml
 ```bash
 llamafactory-cli train examples/train_full/qwen3_fine_tuning_rm.yaml
 ```
-In most reward model training scenarios, we recommend directly fine-tuning our open-source reward model using your own task-specific (or domain-specific) preference data. This approach may reduce reliance on large-scale task-specific data, which allows you to obtain a strong reward model for your target task with only a small amount of preference annotations.
+<u>We recommend directly fine-tuning our open-source reward model using your own task-specific (or domain-specific) preference data.</u> This approach may reduce reliance on large-scale task-specific data, which allows you to obtain a strong reward model for your target task with only a small amount of preference annotations.
 
 
 ### Evaluation
