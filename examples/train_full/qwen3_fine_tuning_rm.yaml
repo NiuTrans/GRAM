@@ -1,6 +1,5 @@
 ### model
-# model_name_or_path: /home/user/if/wang/models/saves/qwen3-4b/pre-training-rm-unified-feedback-600k
-model_name_or_path: /home/user/if/wang/models/saves/qwen3-14b/pre-training-rm-unified-feedback-600k/checkpoint-4000
+model_name_or_path: ${path to your pre-trained reward model}
 
 trust_remote_code: true
 
@@ -23,7 +22,7 @@ dataloader_num_workers: 4
 enable_thinking: false
 
 ### output
-output_dir: /home/user/if/wang/models/saves/qwen3-14b/sft-rm-skywork-v0.2
+output_dir: ${save path}
 logging_steps: 10
 save_strategy: epoch
 plot_loss: true
@@ -56,4 +55,4 @@ gram_loss: true
 gram_candidate_labels:
  - "A"
  - "B"
-gram_label_smoothing: 0.1
+gram_label_smoothing: 0.1  # Recommended to use 0.05 0.1 0.15
