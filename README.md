@@ -6,7 +6,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 <img src="./gram.png" width="1000px"></img>
 
 ## 🆕 Changelog
-- [2025/6/17] We trained GRAM using Qwen3 and achieve a score of 71.4 on JudgeBench with Qwen3-14B, significantly outperforming two strong open-source baselines: Llama-3.1-Nemotron-70B-Reward and Skywork-Reward-Gemma-2-27B-v0.2. 
+- [2025/6/17] We trained GRAM using Qwen3 and achieved a score of 71.4 on JudgeBench with Qwen3-14B, significantly outperforming two strong open-source baselines: Llama-3.1-Nemotron-70B-Reward and Skywork-Reward-Gemma-2-27B-v0.2. 
 - [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available at this [link](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k).
 - [2025/5/1] Our paper has been accepted by ICML 2025!
 
