@@ -1,12 +1,12 @@
 
 # A Generative Foundation Reward Model (GRAM)
 
-This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](). To develop a reward model tailored to a specific task or domain, we recommend fine-tuning the released GRAM model using task-specific preference data. This strategy mitigates the dependence on large-scale human annotations while maintaining strong performance on the target task.
+This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](https://huggingface.co/collections/wangclnlp/gram-68452f737e53feeef4202d9b). To develop a reward model tailored to a specific task or domain, we recommend fine-tuning the released GRAM model using task-specific preference data. This strategy mitigates the dependence on large-scale human annotations while maintaining strong performance on the target task.
 
 <img src="./gram.png" width="1000px"></img>
 
 ## 🆕 Changelog
-- [2025/6/15]
+- [2025/6/17] We trained GRAM using Qwen3 and achieve a score of 71.4 on JudgeBench with Qwen3-14B, significantly outperforming two strong open-source baselines: Llama-3.1-Nemotron-70B-Reward and Skywork-Reward-Gemma-2-27B-v0.2. 
 - [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available at this [link](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k).
 - [2025/5/1] Our paper has been accepted by ICML 2025!
 
@@ -29,28 +29,34 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 Check out our GRAM series below. The models were first pre-trained on the dataset available [here](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k), and then fine-tuned on the dataset available [here](https://huggingface.co/datasets/wangclnlp/GRAM-fine-tuning-65k).
 
-- We evaluate our reward model on the recently introduced [RM-Bench](https://github.com/THU-KEG/RM-Bench), a challenging benchmark for reward models, and present the results as follows:
+- We evaluate our reward model on the [JudgeBench](https://huggingface.co/datasets/ScalerLab/JudgeBench), a benchmark for evaluating LLM-as-a-Judge applications, and present the results as follows:
 
-| Model | Chat |	Code |	Math |	Safety |	Avg. | 
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|nvidia/Llama-3.1-Nemotron-70B-Reward|70.7|57.4|64.3|90.3|70.7|
-|Skywork/Skywork-Reward-Gemma-2-27B-v0.2|71.8|56.6|59.2|94.3|70.5|
-|Skywork/Skywork-Reward-Llama-3.1-8B-v0.2|69.5|54.5|60.6|95.7|70.1|
-|nvidia/Nemotron-340B-Reward|71.2|59.4|59.8|87.5|69.5|
-|internlm/internlm2-20b-reward|63.1|56.7|66.8|86.5|68.3|
-|[GRAM-Qwen3-1.7B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-1.7B-RewardModel)   |59.6|53.6|59.6|91.8|66.2|
-|[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |56.8|50.0|56.3|88.7|63.0|
+| Model | Param. | Chat |	Code |	Math |	Safety |	Avg. | 
+|:-|-:|:-:|:-:|:-:|:-:|:-:|
+|[GRAM-Qwen3-14B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-14B-RewardModel) |14B|63.0|64.3|89.3|69.1|71.4|
+|[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |3B|59.7|64.3|84.0|71.4|69.9|
+|[GRAM-Qwen3-8B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-8B-RewardModel) |8B|62.3|64.3|80.4|64.3|67.8|
+|nvidia/Llama-3.1-Nemotron-70B-Reward|70B|62.3|72.5|76.8|57.1|67.2|
+|[GRAM-Qwen3-4B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-4B-RewardModel) |4B|59.7|59.2|80.4|64.3|65.9|
+|[GRAM-Qwen3-1.7B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-1.7B-RewardModel)   |1.7B|60.4|65.3|78.6|57.1|65.4|
+|Skywork/Skywork-Reward-Gemma-2-27B-v0.2|27B|59.7|66.3|83.9|50.0|65.0|
+|Skywork/Skywork-Reward-Llama-3.1-8B-v0.2|8B|59.1|64.3|76.8|50.0|62.6|
+|internlm/internlm2-20b-reward|20B|62.3|69.4|66.1|50.0|62.0|
 
-- We also evaluate our reward model on the [JudgeBench](https://huggingface.co/datasets/ScalerLab/JudgeBench), a benchmark for evaluating LLM-as-a-Judge applications, and present the results as follows:
+- We also evaluate our reward model on the recently introduced [RM-Bench](https://github.com/THU-KEG/RM-Bench), a challenging benchmark for reward models, and present the results as follows:
 
-| Model | Chat |	Code |	Math |	Safety |	Avg. | 
-|:-:|:-:|:-:|:-:|:-:|:-:|
-|[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |59.7|64.3|84.0|71.4|69.9|
-|nvidia/Llama-3.1-Nemotron-70B-Reward|62.3|72.5|76.8|57.1|67.2|
-|[GRAM-Qwen3-1.7B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-1.7B-RewardModel)   |60.4|65.3|78.6|57.1|65.4|
-|Skywork/Skywork-Reward-Gemma-2-27B-v0.2|59.7|66.3|83.9|50.0|65.0|
-|Skywork/Skywork-Reward-Llama-3.1-8B-v0.2|59.1|64.3|76.8|50.0|62.6|
-|internlm/internlm2-20b-reward|62.3|69.4|66.1|50.0|62.0|
+
+| Model | Param. | Chat |	Code |	Math |	Safety |	Avg. | 
+|:-|-:|:-:|:-:|:-:|:-:|:-:|
+|nvidia/Llama-3.1-Nemotron-70B-Reward| 70B | 70.7|57.4|64.3|90.3|70.7|
+|Skywork/Skywork-Reward-Gemma-2-27B-v0.2 | 27B |71.8|56.6|59.2|94.3|70.5|
+|[GRAM-Qwen3-14B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-14B-RewardModel) |14B|67.4|55.2|62.8|94.3|69.9|
+|nvidia/Nemotron-340B-Reward| 340B| 71.2|59.4|59.8|87.5|69.5|
+|[GRAM-Qwen3-8B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-8B-RewardModel) |8B|63.5|53.9|62.9|92.8|68.3|
+|internlm/internlm2-20b-reward|20B|63.1|56.7|66.8|86.5|68.3|
+|[GRAM-Qwen3-4B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-4B-RewardModel) |4B|61.1|54.7|61.6|92.9|67.6|
+|[GRAM-Qwen3-1.7B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-1.7B-RewardModel)   |1.7B|59.6|53.6|59.6|91.8|66.2|
+|[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |3B|56.8|50.0|56.3|88.7|63.0|
 
 ## Installation Guide
 
