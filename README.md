@@ -29,7 +29,7 @@ This repository contains the code and released models for our paper [GRAM: A Gen
 
 Check out our GRAM series below. The models were first pre-trained on the dataset available [here](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k), and then fine-tuned on the dataset available [here](https://huggingface.co/datasets/wangclnlp/GRAM-fine-tuning-65k).
 
-- We evaluate our reward model on the [JudgeBench](https://huggingface.co/datasets/ScalerLab/JudgeBench), a benchmark for evaluating LLM-as-a-Judge applications, and present the results as follows:
+- We evaluate our reward model on the [JudgeBench](https://huggingface.co/datasets/ScalerLab/JudgeBench), a benchmark for evaluating LLM-as-a-Judge (i.e., generative reward models) applications, and present the results as follows:
 
 | Model | Param. | Chat |	Code |	Math |	Safety |	Avg. | 
 |:-|-:|:-:|:-:|:-:|:-:|:-:|
