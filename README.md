@@ -1,7 +1,7 @@
 
 # A Generative Foundation Reward Model (GRAM)
 
-This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](https://huggingface.co/collections/wangclnlp/gram-68452f737e53feeef4202d9b). To develop a reward model tailored to a specific task or domain, we recommend fine-tuning the released GRAM model using task-specific preference data. This strategy mitigates the dependence on large-scale human annotations while maintaining strong performance on the target task.
+This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](https://arxiv.org/abs/2506.14175). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](https://huggingface.co/collections/wangclnlp/gram-68452f737e53feeef4202d9b). To develop a reward model tailored to a specific task or domain, we recommend fine-tuning the released GRAM model using task-specific preference data. This strategy mitigates the dependence on large-scale human annotations while maintaining strong performance on the target task.
 
 <img src="./gram.png" width="1000px"></img>
 
@@ -257,7 +257,15 @@ def list_wise_response_ranking():
 
 ## Citation
 ```bash
-our paper bib
+@misc{wang2025gram,
+      title={GRAM: A Generative Foundation Reward Model for Reward Generalization}, 
+      author={Chenglong Wang and Yang Gan and Yifu Huo and Yongyu Mu and Qiaozhi He and Murun Yang and Bei Li and Tong Xiao and Chunliang Zhang and Tongran Liu and Jingbo Zhu},
+      year={2025},
+      eprint={2506.14175},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2506.14175}, 
+}
 ```
 
 
