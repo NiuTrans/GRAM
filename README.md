@@ -31,7 +31,7 @@ Check out our GRAM series below. The models were first pre-trained on the datase
 
 - We evaluate our reward model on the [JudgeBench](https://huggingface.co/datasets/ScalerLab/JudgeBench), a benchmark for evaluating LLM-as-a-Judge (i.e., generative reward models) applications, and present the results as follows:
 
-| Model | Param. | Chat |	Code |	Math |	Safety |	Avg. | 
+| Model | Param. | Knowl. | Reason. | Math | Coding |	Avg. | 
 |:-|-:|:-:|:-:|:-:|:-:|:-:|
 |[GRAM-Qwen3-14B-RewardBench](https://huggingface.co/wangclnlp/GRAM-Qwen3-14B-RewardModel) |14B|63.0|64.3|89.3|69.1|71.4|
 |[GRAM-LLaMA3.2-3B-RewardBench](https://huggingface.co/wangclnlp/GRAM-LLaMA3.2-3B-RewardModel) |3B|59.7|64.3|84.0|71.4|69.9|
@@ -257,14 +257,11 @@ def list_wise_response_ranking():
 
 ## Citation
 ```bash
-@misc{wang2025gram,
-      title={GRAM: A Generative Foundation Reward Model for Reward Generalization}, 
-      author={Chenglong Wang and Yang Gan and Yifu Huo and Yongyu Mu and Qiaozhi He and Murun Yang and Bei Li and Tong Xiao and Chunliang Zhang and Tongran Liu and Jingbo Zhu},
-      year={2025},
-      eprint={2506.14175},
-      archivePrefix={arXiv},
-      primaryClass={cs.CL},
-      url={https://arxiv.org/abs/2506.14175}, 
+@inproceedings{wang2025gram,
+title={{GRAM}: A Generative Foundation Reward Model for Reward Generalization},
+author={Chenglong Wang and Yang Gan and Yifu Huo and Yongyu Mu and Qiaozhi He and MuRun Yang and Bei Li and Tong Xiao and Chunliang Zhang and Tongran Liu and JingBo Zhu},
+booktitle={Forty-second International Conference on Machine Learning},
+year={2025}
 }
 ```
 
