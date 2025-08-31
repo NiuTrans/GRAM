@@ -76,7 +76,7 @@ We evaluate our models on two challenging reward benchmarks, [RM-Bench](https://
 
 You can directly run the GRAM model using the demo provided below. You can also train GRAM-R^2 using the code available [here](https://github.com/NiuTrans/GRAM).
 
-To apply the GRAM-R$^2$ model on pairwise data:
+To apply the GRAM-R^2 model on pairwise data:
 ```python
 import torch
 import accelerate
@@ -187,7 +187,7 @@ better_response = 0 if pairwise_ranking(user_input, responses[0], responses[1])>
 print(f'Response {better_response} is better between response 0 and response 1.')
 ```
 
-To apply GRAM-R$^2$ model on listwise data:
+To apply GRAM-R^2 model on listwise data:
 ```python
 # listwise ranking
 responses_id = [idx for idx, _ in enumerate(responses)]
@@ -198,7 +198,7 @@ sorted(
 print(f"The ranking among responses: {' > '.join([str(i) for i in responses_id])}")
 ```
 
-To apply GRAM-R$^2$ model on Best-of-$n$:
+To apply GRAM-R^2 model on Best-of-$n$:
 ```python
 # best-of-n
 best = 0
@@ -208,12 +208,18 @@ for idx in range(1, len(responses)):
 print(f"The best response is response {best}.")
 ```
 
-To use GRAM-R$^2$ with votes:
+To use GRAM-R^2 with votes:
 ```python
 # vote in k (take pairwise ranking as an example.)
 k = 8
 res = [pairwise_ranking(user_input, responses[0], responses[1]) for i in range(k)]
 print(f"The better response is response{max(set(res), key=res.count)} in {k} votes.")
+```
+
+Tips: To accelerate inference, GRAM-R^2 can be run with vLLM using multiple processes and threads. We also provide this script as a reference implementation.
+```bash
+bash vllm_start.sh
+python call_vllm_with_multi_port.py {input_file_path} {output_file_path}
 ```
 
 ## Citation
