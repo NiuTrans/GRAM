@@ -1,4 +1,8 @@
-# Introduction
+
+# Self-Training Generative Foundation Reward Models for Reward Reasoning
+
+
+## Introduction
 
 This repository introduces the released reward reasoning models from the paper [GRAM-R^2: Self-Training Generative Foundation Reward Models for Reward Reasoning 📝]().
 
