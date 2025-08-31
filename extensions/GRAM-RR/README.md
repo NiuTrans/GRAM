@@ -216,7 +216,7 @@ res = [pairwise_ranking(user_input, responses[0], responses[1]) for i in range(k
 print(f"The better response is response{max(set(res), key=res.count)} in {k} votes.")
 ```
 
-Tips: To accelerate inference, GRAM-R^2 can be run with vLLM using multiple processes and threads. We also provide this script as a reference implementation.
+Tips: To accelerate inference, GRAM-R^2 can be run with [vLLM](https://github.com/vllm-project/vllm) using multiple processes and threads. We also provide this script as a reference implementation.
 ```bash
 bash vllm_start.sh
 python call_vllm_with_multi_port.py {input_file_path} {output_file_path}
