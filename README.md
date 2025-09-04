@@ -3,12 +3,15 @@
 
 This repository contains the code and released models for our paper [GRAM: A Generative Foundation Reward Model for Reward Generalization 📝](https://arxiv.org/abs/2506.14175). We propose a more effective approach to reward model training by combining both labeled and unlabeled data. Our method introduces a generative reward model that first learns from a large corpus of unlabeled data and is then fine-tuned with supervised data. Please find all the released model checkpoints at [this link 🤗](https://huggingface.co/collections/wangclnlp/gram-68452f737e53feeef4202d9b). To develop a reward model tailored to a specific task or domain, we recommend fine-tuning the released GRAM model using task-specific preference data. This strategy mitigates the dependence on large-scale human annotations while maintaining strong performance on the target task.
 
+
 <img src="./gram.png" width="1000px"></img>
 
+
 ## 🆕 Changelog
+- [2025/9/1] We released the second-generation generative foundation reward model, GRAM-R^2, which incorporates reward reasoning and generates rationales before predicting preference labels. When using LLaMA-3.1-8B-Instruct as the backbone, the GRAM-R^2 can achieve 85.7% accuracy on RM-Bench. Furthermore, test-time scaling strategies (e.g., majority voting) can be integrated to further enhance performance. More details are provided in this [README](./extensions/GRAM-RR/README.md) and our [paper](https://arxiv.org/pdf/2509.02492). 
 - [2025/6/17] We trained GRAM using Qwen3 and achieved a score of 71.4 on JudgeBench with Qwen3-14B, significantly outperforming two strong open-source baselines: Llama-3.1-Nemotron-70B-Reward and Skywork-Reward-Gemma-2-27B-v0.2. 
 - [2025/6/1] We performed additional data cleaning, such as the removal of overly long or corrupted samples, to help GRAM achieve better performance. The processed dataset is available at this [link](https://huggingface.co/datasets/wangclnlp/GRAM-pre-training-566k).
-- [2025/5/1] Our paper has been accepted by ICML 2025!
+- [2025/5/1] Our paper has been accepted by ICML 2025! 
 
 
 ## 🔗 Quick Links
@@ -63,7 +66,7 @@ Check out our GRAM series below. The models were first pre-trained on the datase
 The code of this repo is modified from [hiyouga/LLaMA-Factory](https://github.com/hiyouga/LLaMA-Factory). If you encounter installation issues (e.g., related to PyTorch or CUDA), we recommend first checking the LLaMA-Factory [issues](https://github.com/hiyouga/LLaMA-Factory/issues) for potential solutions. If the problem persists, please feel free to submit an issue in this repository.
 
 ```bash
-git clone --depth 1 https://gitee.com/wangclnlp/gram
+git clone git@github.com:NiuTrans/GRAM.git
 cd gram
 pip install -e ".[torch,metrics]" --no-build-isolation
 ```
@@ -256,12 +259,22 @@ def list_wise_response_ranking():
 ```
 
 ## Citation
-```bash
+```
 @inproceedings{wang2025gram,
 title={{GRAM}: A Generative Foundation Reward Model for Reward Generalization},
 author={Chenglong Wang and Yang Gan and Yifu Huo and Yongyu Mu and Qiaozhi He and MuRun Yang and Bei Li and Tong Xiao and Chunliang Zhang and Tongran Liu and JingBo Zhu},
 booktitle={Forty-second International Conference on Machine Learning},
 year={2025}
+}
+
+@misc{wang2025gramr2,
+      title={GRAM-R$^2$: Self-Training Generative Foundation Reward Models for Reward Reasoning}, 
+      author={Chenglong Wang and Yongyu Mu and Hang Zhou and Yifu Huo and Ziming Zhu and Jiali Zeng and Murun Yang and Bei Li and Tong Xiao and Xiaoyang Hao and Chunliang Zhang and Fandong Meng and Jingbo Zhu},
+      year={2025},
+      eprint={2509.02492},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2509.02492}, 
 }
 ```
 
