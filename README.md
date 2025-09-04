@@ -259,7 +259,7 @@ def list_wise_response_ranking():
 ```
 
 ## Citation
-```bash
+```
 @inproceedings{wang2025gram,
 title={{GRAM}: A Generative Foundation Reward Model for Reward Generalization},
 author={Chenglong Wang and Yang Gan and Yifu Huo and Yongyu Mu and Qiaozhi He and MuRun Yang and Bei Li and Tong Xiao and Chunliang Zhang and Tongran Liu and JingBo Zhu},
