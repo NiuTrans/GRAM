@@ -4,7 +4,7 @@
 
 ## Introduction
 
-This repository introduces the released reward reasoning models from the paper [GRAM-R^2: Self-Training Generative Foundation Reward Models for Reward Reasoning 📝]().
+This repository introduces the released reward reasoning models from the paper [GRAM-R^2: Self-Training Generative Foundation Reward Models for Reward Reasoning 📝](https://arxiv.org/pdf/2509.02492).
 
 <img src="https://raw.githubusercontent.com/wangclnlp/GRAM/refs/heads/main/gram-rr.png" width="1000px"></img>
 
