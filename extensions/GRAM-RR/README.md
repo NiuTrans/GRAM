@@ -225,6 +225,14 @@ python call_vllm_with_multi_port.py {input_file_path} {output_file_path}
 ## Citation
 
 If you find this model helpful for your research, please cite :
-```bash
-coming soon
+```
+@misc{wang2025gramr2,
+      title={GRAM-R$^2$: Self-Training Generative Foundation Reward Models for Reward Reasoning}, 
+      author={Chenglong Wang and Yongyu Mu and Hang Zhou and Yifu Huo and Ziming Zhu and Jiali Zeng and Murun Yang and Bei Li and Tong Xiao and Xiaoyang Hao and Chunliang Zhang and Fandong Meng and Jingbo Zhu},
+      year={2025},
+      eprint={2509.02492},
+      archivePrefix={arXiv},
+      primaryClass={cs.CL},
+      url={https://arxiv.org/abs/2509.02492}, 
+}
 ```
